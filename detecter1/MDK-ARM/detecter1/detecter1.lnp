@@ -9,6 +9,8 @@
 "detecter1\usart.o"
 "detecter1\stm32l4xx_it.o"
 "detecter1\stm32l4xx_hal_msp.o"
+"detecter1\key.o"
+"detecter1\oled.o"
 "detecter1\stm32l4xx_hal_adc.o"
 "detecter1\stm32l4xx_hal_adc_ex.o"
 "detecter1\stm32l4xx_hal.o"

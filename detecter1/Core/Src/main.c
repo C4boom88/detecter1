@@ -101,7 +101,8 @@ int main(void)
   MX_TIM5_Init();
   MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
-
+  KEY_Init();
+	OLED_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */

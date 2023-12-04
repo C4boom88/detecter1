@@ -21,7 +21,7 @@
 #include "adc.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "main.h"
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -162,5 +162,37 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
+uint16_t Get_Adc(uint32_t ch)
+{
+    ADC_ChannelConfTypeDef ADC1_ChanConf;
+
+    ADC1_ChanConf.Channel = ch;                                 //通道
+    ADC1_ChanConf.Rank = ADC_REGULAR_RANK_1;					//第1个序列，序列1
+    ADC1_ChanConf.SamplingTime = ADC_SAMPLETIME_247CYCLES_5;    //采样时间
+    ADC1_ChanConf.SingleDiff = ADC_SINGLE_ENDED;				//ADC单端输入
+    ADC1_ChanConf.OffsetNumber = ADC_OFFSET_NONE;				//偏移号选择
+    ADC1_ChanConf.Offset = 0;
+    HAL_ADC_ConfigChannel(&hadc1, &ADC1_ChanConf);       //通道配置
+
+    HAL_ADC_Start(&hadc1);                               //开启ADC
+
+    HAL_ADC_PollForConversion(&hadc1, 10);               //轮询转换
+
+    return (uint16_t)HAL_ADC_GetValue(&hadc1);	        	//返回最近一次ADC1规则组的转换结果
+}
+
+uint16_t Get_Adc_Average(uint32_t ch, uint8_t times)
+{
+    uint32_t temp_val = 0;
+    uint8_t t;
+
+    for(t = 0; t < times; t++)
+    {
+        temp_val += Get_Adc(ch);
+        HAL_Delay(5);
+    }
+
+    return temp_val / times;
+}
 
 /* USER CODE END 1 */
